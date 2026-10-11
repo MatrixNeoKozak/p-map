@@ -18,6 +18,8 @@ export function pMapSettledKeyed(input, mapper, options) {
 async function mapKeyed(input, mapper, options, isSettled) {
 	const entries = getKeyedEntries(input);
 
+	validateOptions(entries, mapper, options?.concurrency ?? Number.POSITIVE_INFINITY);
+
 	// After the values have their handlers, like the other argument errors, which `mapConcurrently` checks. It cannot check this one, as it gets the wrapper below as its mapper.
 	if (typeof mapper !== 'function') {
 		throw new TypeError('Mapper function is required');
